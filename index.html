@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Short Drama Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">short-drama · Codex Skill Web UI</p>
+        <h1>短剧创作工作台</h1>
+        <p class="hero-copy">把 short-drama 技能的命令流程做成表单：填写项目参数，选择功能，一键生成可交给 Codex 执行的创作指令。</p>
+      </div>
+      <div class="hero-actions">
+        <button id="saveState" class="primary">保存状态</button>
+        <button id="copyPrompt">复制指令</button>
+        <button id="downloadState">导出项目 JSON</button>
+      </div>
+    </header>
+
+    <section class="notice">
+      <strong>使用方式：</strong>在这里生成指令后，复制到 Codex 新任务中执行。Codex 已安装 <code>short-drama</code> 技能，会按对应命令生成文件和内容。
+    </section>
+
+    <section class="layout">
+      <aside class="panel nav-panel">
+        <h2>功能</h2>
+        <button class="cmd active" data-command="start">/start 选题立项</button>
+        <button class="cmd" data-command="plan">/plan 创作方案</button>
+        <button class="cmd" data-command="characters">/characters 角色设计</button>
+        <button class="cmd" data-command="outline">/outline 分集目录</button>
+        <button class="cmd" data-command="episode">/episode 分集剧本</button>
+        <button class="cmd" data-command="review">/review 质量审查</button>
+        <button class="cmd" data-command="compliance">/compliance 合规审核</button>
+        <button class="cmd" data-command="export">/export 导出整剧</button>
+        <button class="cmd" data-command="overseas">/overseas 海外模式</button>
+      </aside>
+
+      <section class="panel form-panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">项目参数</p>
+            <h2 id="commandTitle">/start 选题立项</h2>
+          </div>
+          <span id="status" class="status">未保存</span>
+        </div>
+
+        <div class="grid">
+          <label>剧名
+            <input id="title" placeholder="例如：归来仍是少主">
+          </label>
+          <label>题材
+            <select id="genre">
+              <option>都市逆袭</option>
+              <option>甜宠爱情</option>
+              <option>复仇爽剧</option>
+              <option>古装权谋</option>
+              <option>悬疑反转</option>
+              <option>奇幻穿越</option>
+              <option>家庭伦理</option>
+              <option>职场成长</option>
+            </select>
+          </label>
+          <label>目标平台
+            <select id="platform">
+              <option>抖音</option>
+              <option>快手</option>
+              <option>视频号</option>
+              <option>小程序付费</option>
+              <option>海外 ReelShort / TikTok</option>
+            </select>
+          </label>
+          <label>目标受众
+            <input id="audience" placeholder="例如：25-45岁男频爽剧用户">
+          </label>
+          <label>总集数
+            <input id="episodes" type="number" min="1" value="80">
+          </label>
+          <label>单集时长
+            <input id="duration" placeholder="例如：1-2分钟">
+          </label>
+          <label>调性
+            <select id="tone">
+              <option>强爽快节奏</option>
+              <option>甜虐交织</option>
+              <option>强反转悬疑</option>
+              <option>情绪共鸣</option>
+              <option>精品质感</option>
+            </select>
+          </label>
+          <label>商业目标
+            <select id="business">
+              <option>提升完播和追更</option>
+              <option>小程序付费转化</option>
+              <option>品牌植入</option>
+              <option>海外付费短剧</option>
+              <option>IP孵化</option>
+            </select>
+          </label>
+        </div>
+
+        <label>一句话梗概 / 初始想法
+          <textarea id="logline" rows="4" placeholder="例如：被豪门羞辱三年的赘婿，其实是失踪多年的财阀继承人，归来后为妻子和母亲讨回公道。"></textarea>
+        </label>
+
+        <label>特殊要求
+          <textarea id="requirements" rows="3" placeholder="例如：前3秒必须强钩子；避免低俗擦边；每集结尾要有悬念；适合竖屏拍摄。"></textarea>
+        </label>
+
+        <div id="dynamicFields" class="dynamic-fields"></div>
+      </section>
+
+      <section class="panel output-panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">生成给 Codex 的指令</p>
+            <h2>Prompt</h2>
+          </div>
+          <button id="regenerate" class="primary">重新生成</button>
+        </div>
+        <textarea id="promptOutput" rows="22"></textarea>
+        <div class="tips">
+          <p>下一步：复制上方指令 → 新开 Codex 任务 → 粘贴执行。若要继续同一短剧项目，请在同一个项目目录中运行。</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
